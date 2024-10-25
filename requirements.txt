@@ -1,0 +1,4 @@
+Flask
+openai
+firebase-admin
+python-dotenv
