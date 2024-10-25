@@ -14,7 +14,7 @@ print("Conexão com Firebase bem-sucedida!")
 @app.route('/')
 def hello():
     # Teste: Salvar mensagem no Firestore
-    save_message("123456789", "Teste de mensagem", "Resposta do GPT")
+    # save_message("123456789", "Teste de mensagem", "Resposta do GPT")
     return "Mensagem salva no Firestore!"
 
 @app.route('/gpt')
@@ -64,4 +64,4 @@ def send_whatsapp_message(phone, message):
     return response.json()
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    app.run(port=5000, debug=True)

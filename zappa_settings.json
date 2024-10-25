@@ -1,0 +1,18 @@
+{
+    "dev": {
+        "app_function": "app.app",
+        "aws_region": "sa-east-1",
+        "exclude": [
+            "boto3",
+            "dateutil",
+            "botocore",
+            "s3transfer",
+            "concurrent"
+        ],
+        "profile_name": "default",
+        "project_name": "projeto-whatsap",
+        "runtime": "python3.12",
+        "s3_bucket": "zappa-dev-whatsapp-gpt",
+        "slim_handler": true
+    }
+}
