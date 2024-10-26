@@ -1,21 +1,23 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 # import requests
-# from firebase.firebase_init import initialize_firebase
-# from firebase.store import save_message, get_last_messages
+from firebase.firebase_init import initialize_firebase
+from firebase.store import save_message, get_last_messages
 # from gpt_integration.gpt_request import get_gpt_response
+from random import randint
 
 app = Flask(__name__)
 CORS(app)
 
-# db = initialize_firebase()
-# print("Conexão com Firebase bem-sucedida!")
+db = initialize_firebase()
+print("Conexão com Firebase bem-sucedida!")
 
 @app.route('/')
 def hello():
     # Teste: Salvar mensagem no Firestore
-    # save_message("123456789", "Teste de mensagem", "Resposta do GPT")
-    return "Mensagem salva no Firestore!"
+    # Numero aleatorio para simular um numero de telefone
+    save_message(str(randint(100000000, 999999999)), "Teste de mensagem 2", "Resposta do GPT 2")
+    return "Mensagem salva no Firestore! 2"
 
 # @app.route('/gpt')
 # def gpt():
