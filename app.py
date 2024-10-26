@@ -1,12 +1,12 @@
 from flask import Flask, request, jsonify
-# from flask_cors import CORS
+from flask_cors import CORS
 # import requests
 # from firebase.firebase_init import initialize_firebase
 # from firebase.store import save_message, get_last_messages
 # from gpt_integration.gpt_request import get_gpt_response
 
 app = Flask(__name__)
-# CORS(app)
+CORS(app)
 
 # db = initialize_firebase()
 # print("Conexão com Firebase bem-sucedida!")
