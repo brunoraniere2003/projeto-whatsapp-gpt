@@ -38,10 +38,10 @@ def gpt_requests(dados, n=5):
     historico.append({"role": "user", "content": msg_usuario})
 
     # Mensagem de contexto para o GPT
-    # system_brunoraniere = assistant_brunoraniere()
+    system_brunoraniere = "Você é um assistant virtual que simula a personalidade de Bruno Raniere."
     system_message = {
         "role": "system",
-        "content": "Você é um assistant virtual que simula a personalidade de Bruno Raniere."
+        "content": system_brunoraniere
     }
 
     # Envia a conversa ao modelo gpt-4o-mini Bruno Raniere da OpenAI assistant
