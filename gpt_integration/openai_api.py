@@ -4,7 +4,7 @@ from database.database_functions import adicionar_linha_excel, visualizar_regist
 from z_api.whatsapp_api import enviar_mensagem
 
 # Configuração da API Key do OpenAI
-openai.api_key = "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"
+openai.api_key = "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"
 
 def gpt_requests(dados, n=5):
     """
