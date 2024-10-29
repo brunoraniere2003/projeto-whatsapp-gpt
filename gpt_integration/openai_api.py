@@ -1,4 +1,5 @@
 import openai
+from assistants import assistant_brunoraniere
 from datetime import datetime
 from database.database_functions import adicionar_linha_excel, visualizar_registros_excel
 from z_api.whatsapp_api import enviar_mensagem
@@ -37,17 +38,20 @@ def gpt_requests(dados, n=5):
     historico.append({"role": "user", "content": msg_usuario})
 
     # Mensagem de contexto para o GPT
+    system_brunoraniere = assistant_brunoraniere()
     system_message = {
         "role": "system",
-        "content": "Você está conversando com um usuário, responda de forma útil e direta. Não ultrapasse 15 tokens."
+        "content": system_brunoraniere
     }
 
-    # Envia a conversa ao modelo Bruno Raniere da OpenAI assistant
+    # Envia a conversa ao modelo gpt-4o-mini Bruno Raniere da OpenAI assistant
     try:
-        response = openai.Assistant.chat(
-            assistant="asst_dyk8qDa2bbdP2hf8WYritWFC",  # ID do seu Assistant existente
-            messages=[system_message] + historico
-        )
+        response = openai.ChatCompletion.create(
+            model="gpt-4o-mini",  # Modelo específico associado ao seu assistant
+            messages=[system_message] + historico,
+            temperature=1.5,       # Mais criatividade nas respostas
+            max_tokens=100          # Limite de tokens para respostas curtas e objetivas
+        )   
         msg_gpt = response['choices'][0]['message']['content']
 
         # Adiciona a resposta ao Excel
