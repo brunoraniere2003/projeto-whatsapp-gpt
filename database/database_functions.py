@@ -1,22 +1,35 @@
-from openpyxl import load_workbook, Workbook
-from datetime import datetime
+from openpyxl import load_workbook
+import pandas as pd
+import os
 
 def adicionar_linha_excel(nome, numero, msg_usuario, msg_gpt):
-    # Carregar ou criar o arquivo Excel
-    caminho_arquivo = 'database/registro.xlsx'
-    try:
-        workbook = load_workbook(caminho_arquivo)
-        sheet = workbook.active
-    except FileNotFoundError:
-        # Criar o arquivo e as colunas se não existir
+    caminho_arquivo = os.path.join("database", "registro.xlsx")
+
+    if not os.path.exists(caminho_arquivo):
+        from openpyxl import Workbook
         workbook = Workbook()
         sheet = workbook.active
-        sheet.append(["nome", "numero", "msg_usuario", "msg_gpt", "hora"])
+        sheet.append(["nome", "numero", "msg_usuario", "msg_gpt", "hora"])  # Cabeçalhos
+        workbook.save(caminho_arquivo)
 
-    # Adicionar os dados
-    hora = datetime.now().strftime("%Y-%m-%d %H:%M")
-    sheet.append([nome, numero, msg_usuario, msg_gpt, hora])
-
-    # Salvar o arquivo
+    workbook = load_workbook(caminho_arquivo)
+    sheet = workbook.active
+    sheet.append([nome, numero, msg_usuario, msg_gpt])
     workbook.save(caminho_arquivo)
-    workbook.close()
+
+def visualizar_registros_excel():
+    caminho_arquivo = os.path.join(os.path.dirname(__file__), "registro.xlsx")    
+    
+    try:
+        # Lê o arquivo Excel usando pandas
+        df = pd.read_excel(caminho_arquivo)
+        
+        # Converte o DataFrame para uma lista de dicionários
+        registros = df.to_dict(orient="records")
+        
+        return registros
+
+    except FileNotFoundError:
+        return {"error": "Arquivo não encontrado"}
+    except Exception as e:
+        return {"error": str(e)}

@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, request
-from database.database_functions import adicionar_linha_excel
+from database.database_functions import adicionar_linha_excel, visualizar_registros_excel  # Import da nova função
 
 app = Flask(__name__)
 
@@ -17,6 +17,14 @@ def adicionar():
     
     adicionar_linha_excel(nome, numero, msg_usuario, msg_gpt)
     return jsonify({"message": "Linha adicionada com sucesso!"}), 201
+
+@app.route('/ver-registros', methods=['GET'])
+def ver_registros():
+    try:
+        registros = visualizar_registros_excel()
+        return jsonify(registros), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
     app.run(debug=True)
