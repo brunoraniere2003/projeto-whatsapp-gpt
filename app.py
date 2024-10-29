@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, request
 import requests  # Import para fazer requisições HTTP
 from database.database_functions import adicionar_linha_excel, visualizar_registros_excel
+from z_api.whatsapp_api import extrair_dados_webhook, enviar_mensagem
 
 app = Flask(__name__)
 
@@ -34,41 +35,21 @@ def ver_registros():
 @app.route('/webhook', methods=['POST'])
 def webhook():
     dados = request.json
-
-    # Verifica se a mensagem é de um grupo
-    is_group = dados.get("isGroup", True)
-    if is_group:
-        print("Mensagem de grupo ignorada")
-        return jsonify({"status": "Mensagem de grupo ignorada"}), 200
-
-    # Extrai número e mensagem
-    numero = dados.get("phone")
-    mensagem = dados.get("text", {}).get("message")
-
-    print("Número:", numero, "Mensagem:", mensagem)
-
-    # Valida dados
+    
+    # Extrai dados
+    numero, mensagem = extrair_dados_webhook(dados)
+    
+    # Verifica se a mensagem é válida
+    if mensagem == "Mensagem de grupo ignorada":
+        return jsonify({"status": mensagem}), 200
     if not numero:
-        return jsonify({"error": "Número de telefone ausente"}), 401
+        return jsonify({"error": "Número de telefone ausente"}), 400
     if not mensagem:
         return jsonify({"error": "Mensagem de texto ausente"}), 400
 
-    # Envia a mesma mensagem de volta
-    headers = {
-        "Content-Type": "application/json",
-        "client-token": CLIENT_TOKEN
-    }
-    payload = {
-        "phone": numero,
-        "message": mensagem
-    }
-    resposta = requests.post(ZAPI_URL, headers=headers, json=payload)
-
-    # Retorna o resultado do envio
-    if resposta.status_code == 200:
-        return jsonify({"status": "Mensagem enviada com sucesso"}), 200
-    else:
-        return jsonify({"error": "Erro ao enviar mensagem"}), 500
+    # Envia a mensagem de volta
+    resultado = enviar_mensagem(numero, mensagem)
+    return jsonify(resultado), 200 if "status" in resultado else 500
 
 if __name__ == '__main__':
     app.run(debug=True)
