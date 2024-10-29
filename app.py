@@ -42,7 +42,7 @@ def webhook():
 
     # Extrai número e mensagem
     numero = dados.get("phone")
-    mensagem = dados.get("message", {}).get("text")
+    mensagem = dados.get("text")
     print("Número:", numero, "Mensagem:", mensagem)
 
     # Valida dados
