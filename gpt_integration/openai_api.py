@@ -44,8 +44,8 @@ def gpt_requests(dados, n=5):
 
     # Envia a conversa ao modelo Bruno Raniere da OpenAI assistant
     try:
-        response = openai.ChatCompletion.create(
-            assistant="asst_dyk8qDa2bbdP2hf8WYritWFC",  # Aqui substitua pelo seu Assistant ID
+        response = openai.Assistant.chat(
+            assistant="asst_dyk8qDa2bbdP2hf8WYritWFC",  # ID do seu Assistant existente
             messages=[system_message] + historico
         )
         msg_gpt = response['choices'][0]['message']['content']
