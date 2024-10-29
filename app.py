@@ -41,7 +41,7 @@ def webhook():
         return jsonify({"status": "Mensagem de grupo ignorada"}), 200
 
     # Extrai número e mensagem
-    numero = dados.get("phone", {}).get("text")
+    numero = dados.get("phone")
     mensagem = dados.get("message", {}).get("text")
     print("Número:", numero, "Mensagem:", mensagem)
 
