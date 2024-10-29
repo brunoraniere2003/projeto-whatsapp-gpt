@@ -1,5 +1,5 @@
 import openai
-# from assistants import assistant_brunoraniere
+from assistants import assistant_brunoraniere
 from datetime import datetime
 from database.database_functions import adicionar_linha_excel, visualizar_registros_excel
 from z_api.whatsapp_api import enviar_mensagem
@@ -39,6 +39,8 @@ def gpt_requests(dados, n=5):
 
     # Mensagem de contexto para o GPT
     system_brunoraniere = "Você é um assistant virtual que simula a personalidade de Bruno Raniere."
+    system_brunoraniere += assistant_brunoraniere()
+    print(system_brunoraniere)
     system_message = {
         "role": "system",
         "content": system_brunoraniere
