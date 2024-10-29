@@ -29,9 +29,9 @@ def gpt_requests(dados, n=5):
     historico = []
     for registro in registros:
         # Assume que cada registro contém (nome, telefone, msg_usuario, msg_gpt, hora)
-        if registro[1] == telefone:
-            historico.append({"role": "user", "content": registro[2]})
-            historico.append({"role": "assistant", "content": registro[3]})
+        if registro['numero'] == telefone:
+            historico.append({"role": "user", "content": registro['msg_usuario']})
+            historico.append({"role": "assistant", "content": registro['msg_gpt']})
 
     # Adiciona a nova mensagem do usuário
     historico.append({"role": "user", "content": msg_usuario})
