@@ -38,11 +38,13 @@ def webhook():
     # Verifica se a mensagem é de um grupo
     is_group = dados.get("isGroup", True)
     if is_group:
+        print("Mensagem de grupo ignorada")
         return jsonify({"status": "Mensagem de grupo ignorada"}), 200
 
     # Extrai número e mensagem
     numero = dados.get("phone")
-    mensagem = dados.get("text")
+    mensagem = dados.get("text", {}).get("message")
+
     print("Número:", numero, "Mensagem:", mensagem)
 
     # Valida dados
