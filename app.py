@@ -1,13 +1,9 @@
 from flask import Flask, jsonify, request
-import requests  # Import para fazer requisições HTTP
 from database.database_functions import adicionar_linha_excel, visualizar_registros_excel
 from z_api.whatsapp_api import extrair_dados_webhook, enviar_mensagem
+from gpt_integration.openai_api import gpt_requests  # Função para interagir com o GPT e responder via WhatsApp
 
 app = Flask(__name__)
-
-# Configurações da Z-API
-ZAPI_URL = "https://api.z-api.io/instances/3D699FAFFEADD094C8E42E5479B6AFF4/token/6797E7BEE32128FFAD4EEF61/send-text"
-CLIENT_TOKEN = "F885b84cd15ed441da1a4395a2aafea14S"
 
 @app.route('/')
 def home():
@@ -36,7 +32,7 @@ def ver_registros():
 def webhook():
     dados = request.json
     
-    # Extrai dados
+    # Extrai número e mensagem do webhook
     numero, mensagem = extrair_dados_webhook(dados)
     
     # Verifica se a mensagem é válida
@@ -47,9 +43,11 @@ def webhook():
     if not mensagem:
         return jsonify({"error": "Mensagem de texto ausente"}), 400
 
-    # Envia a mensagem de volta
-    resultado = enviar_mensagem(numero, mensagem)
-    return jsonify(resultado), 200 if "status" in resultado else 500
+    # Processa a mensagem com o GPT e envia resposta ao usuário
+    response = gpt_requests(dados, n=5)  # Envia a mensagem e o histórico para o GPT
+    
+    # Retorna resultado da operação
+    return jsonify(response), 200 if "status" in response else 500
 
 if __name__ == '__main__':
     app.run(debug=True)
