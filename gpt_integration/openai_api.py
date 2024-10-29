@@ -45,7 +45,7 @@ def gpt_requests(dados, n=5):
     # Envia a conversa ao modelo GPT-3.5
     try:
         response = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",
+            model="gpt-4o-mini",
             messages=[system_message] + historico
         )
         msg_gpt = response['choices'][0]['message']['content']
