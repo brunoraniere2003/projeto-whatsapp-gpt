@@ -42,10 +42,10 @@ def gpt_requests(dados, n=5):
         "content": "Você está conversando com um usuário, responda de forma útil e direta. Não ultrapasse 15 tokens."
     }
 
-    # Envia a conversa ao modelo GPT-3.5
+    # Envia a conversa ao modelo Bruno Raniere da OpenAI assistant
     try:
         response = openai.ChatCompletion.create(
-            model="gpt-4o-mini",
+            model="asst_dyk8qDa2bbdP2hf8WYritWFC",
             messages=[system_message] + historico
         )
         msg_gpt = response['choices'][0]['message']['content']
