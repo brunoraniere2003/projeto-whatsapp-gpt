@@ -22,6 +22,7 @@ def gpt_requests(dados, n=5):
         return {"error": "Dados insuficientes para continuar o processamento."}
 
     # Consulta as últimas `n` linhas do Excel
+    print(visualizar_registros_excel()[-n:])
     registros = visualizar_registros_excel()[-n:]
 
     # Compila o histórico de mensagens
