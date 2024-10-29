@@ -41,12 +41,13 @@ def webhook():
         return jsonify({"status": "Mensagem de grupo ignorada"}), 200
 
     # Extrai número e mensagem
-    numero = dados.get("sender", {}).get("id")
+    numero = dados.get("phone", {}).get("text")
     mensagem = dados.get("message", {}).get("text")
+    print("Número:", numero, "Mensagem:", mensagem)
 
     # Valida dados
     if not numero:
-        return jsonify({"error": "Número de telefone ausente"}), 400
+        return jsonify({"error": "Número de telefone ausente"}), 401
     if not mensagem:
         return jsonify({"error": "Mensagem de texto ausente"}), 400
 
