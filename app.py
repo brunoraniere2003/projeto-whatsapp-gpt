@@ -45,8 +45,10 @@ def webhook():
     mensagem = dados.get("message", {}).get("text")
 
     # Valida dados
-    if not numero or not mensagem:
-        return jsonify({"error": "Dados incompletos"}), 400
+    if not numero:
+        return jsonify({"error": "Número de telefone ausente"}), 400
+    if not mensagem:
+        return jsonify({"error": "Mensagem de texto ausente"}), 400
 
     # Envia a mesma mensagem de volta
     headers = {
