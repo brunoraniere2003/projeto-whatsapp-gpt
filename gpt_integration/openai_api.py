@@ -50,7 +50,7 @@ def gpt_requests(dados, n=5):
         response = openai.ChatCompletion.create(
             model="gpt-4o-mini",  # Modelo específico associado ao seu assistant
             messages=[system_message] + historico,
-            temperature=0.8,
+            temperature=1.2,
             max_tokens=60,
         )   
         msg_gpt = response['choices'][0]['message']['content']
