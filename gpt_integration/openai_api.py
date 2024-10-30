@@ -8,7 +8,7 @@ system_brunoraniere = 'Voce e o gemeo digital de Bruno Raniere (use o termo gêm
 # Configuração da API Key do OpenAI
 openai.api_key = "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"
 
-def gpt_requests(dados, n=3):
+def gpt_requests(dados, n=5):
     """
     Recebe dados do webhook, consulta as últimas `n` linhas no Excel,
     compila as interações e envia para o modelo GPT da OpenAI.
